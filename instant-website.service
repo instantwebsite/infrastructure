@@ -1,0 +1,32 @@
+[Unit]
+Description=InstantWebsite Clojure Backend
+
+[Service]
+WorkingDirectory=/instant-website-backend
+ExecStart=/usr/bin/java -server -Xms16g -Xmx16g -jar instant-website.jar
+User=instant-website
+Type=simple
+Environment=IW_DB_PATH=/instant-website-db/rocksdb
+Environment=IW_STORAGE_PATH=/instant-website-storage/
+Environment=IW_ENV=production
+Environment=IW_FRONTEND_HOST=https://dashboard.instantwebsite.app
+Environment=IW_STRIPE_PK=pk_live_51HSMvQKE4zmFNORmFFXSafjBbCXP25h0R5HfvOTP79tw6DNaA7VtZLHc7QwLqmfDVlB9yLRr4d3fQgVhdDOh2gjn00gMSSWQWs
+Environment=IW_STRIPE_SK=X
+Environment=IW_STRIPE_PRO_PRICE_ID=price_1Ha2F0KE4zmFNORmCGJVKg9r
+Environment=IW_STRIPE_PRO_PRODUCT_ID=prod_IAMyYjYhQ1SW9I
+Environment=IW_CAWDY_PORT=:443
+Environment=IW_CAWDY_DISABLE_SSL=false
+Environment=IW_IPINFO_TOKEN=X
+Environment=IW_WEBSITES_TITLE=InstantWebsite.app
+Environment=IW_ADMIN_USER=victorbjelkholm@gmail.com
+Environment=IW_WEBSITES_STORAGE_PATH=/websites
+Environment=IW_HTTPKIT_THREADS=32
+LimitAS=infinity
+LimitRSS=infinity
+LimitCORE=infinity
+LimitNOFILE=infinity
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

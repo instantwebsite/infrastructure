@@ -1,0 +1,47 @@
+# Main backend API
+api.instantwebsite.app {
+	tls letsencrypt@victor.earth
+	encode zstd gzip
+	log {
+		output file /var/log/caddy/instantwebsite-api-access.log
+	}
+	root * /usr/share/caddy
+	rewrite * /api{uri}
+	reverse_proxy localhost:8080
+}
+
+# API to be used from the Figma plugin 
+plugin-api.instantwebsite.app {
+	tls letsencrypt@victor.earth
+	encode zstd gzip
+	log {
+		output file /var/log/caddy/instantwebsite-plugin-api-access.log
+	}
+	root * /usr/share/caddy
+	rewrite * /plugin-api{uri}
+	reverse_proxy localhost:8080
+}
+
+# Website previews
+websites.instantwebsite.app {
+	tls letsencrypt@victor.earth
+	encode zstd gzip
+	log {
+		output file /var/log/caddy/instantwebsite-websites-access.log
+	}
+	root * /usr/share/caddy
+	rewrite * /websites{uri}
+	reverse_proxy localhost:8080
+}
+
+# Dashboard that interacts with main backend API
+dashboard.instantwebsite.app {
+	tls letsencrypt@victor.earth
+	encode zstd gzip
+	log {
+		output file /var/log/caddy/instantwebsite-frontend-access.log
+	}
+	root * /instant-website-frontend
+	try_files {path} /index.html
+	file_server
+}
